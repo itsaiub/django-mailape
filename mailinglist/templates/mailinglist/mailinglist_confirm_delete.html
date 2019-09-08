@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Confirm delete {{ mailinglist.name }}
+{% endblock title %}
+
+{% block body %}
+  <h1>Confirm Delete</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ mailinglist.name }}??</p>
+    <input type="submit" class="btn btn-danger btn-sm" value="Yes">
+    <a class="btn btn-primary btn-lg" href="">No</a>
+  </form>
+{% endblock body %}
