@@ -5,8 +5,8 @@ from django.template import Context, engines
 from django.core.mail import send_mail
 
 
-CONFIRM_SUBSCRIPTION_HTML = 'mailinglist/email/confirmation.html'
-CONFIRM_SUBSCRIPTION_TXT = 'mailinglist/email/confirmation.txt'
+CONFIRM_SUBSCRIPTION_HTML = 'mailinglist/email_templates/confirmation.html'
+CONFIRM_SUBSCRIPTION_TXT = 'mailinglist/email_templates/confirmation.txt'
 
 
 class EmailTemplateContext(Context):
