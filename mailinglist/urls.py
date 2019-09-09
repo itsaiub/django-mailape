@@ -13,4 +13,8 @@ urlpatterns = [
          name='delete_mailinglist'),
     path('mailinglist/<uuid:pk>/manage',
          views.DetailMailingList.as_view(), name='manage_mailinglist'),
+    path('mailinglist/<uuid:mailinglist_id>/subscribe',
+         views.SubscribeToMailList.as_view(), name='subscribe'),
+    path('mailinglist/<uuid:pk>/thankyou',
+         views.ThanksForSubs.as_view(), name='subscriber_thankyou'),
 ]
