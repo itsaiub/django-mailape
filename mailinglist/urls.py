@@ -21,4 +21,6 @@ urlpatterns = [
          views.ConfirmSubscriptionView.as_view(), name='confirm_subscription'),
     path('mailinglist/unsubscribe/<uuid:pk>',
          views.UnsubscribeView.as_view(), name='unsubscribe'),
+    path('mailinglist/<uuid:mailinglist_pk>/message/new',
+         views.CreateMessage.as_view(), name='create_message'),
 ]

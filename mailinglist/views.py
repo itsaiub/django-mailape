@@ -2,6 +2,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DeleteView, DetailView
+from django.core.exceptions import PermissionDenied
 
 from . import models, forms, mixins
 # Create your views here.
@@ -91,3 +92,56 @@ class UnsubscribeView(DeleteView):
                 'mailinglist_pk': mailing_list.id
             }
         )
+
+
+class CreateMessage(LoginRequiredMixin, CreateView):
+    SAVE_ACTION = 'save'
+    PREVIEW_ACTION = 'preview'
+
+    form_class = forms.MessageForm
+
+    template_name = 'mailinglist/message_form.html'
+
+    def get_success_url(self):
+        return reverse(
+            'mailinglist:manage_mailinglist',
+            kwargs={
+                'pk': self.object.mailing_list.id
+            }
+        )
+
+    def get_initial(self):
+        mailing_list = self.get_mailing_list()
+        return {
+            'mailing_list': mailing_list.id,
+        }
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        mailing_list = self.get_mailing_list()
+        ctx.update({
+            'mailing_list': mailing_list,
+            'SAVE_ACTION': self.SAVE_ACTION,
+            'PREVIEW_ACTION': self.PREVIEW_ACTION
+        })
+        return ctx
+
+    def form_valid(self, form):
+        action = self.request.POST.get('action')
+        if action == self.PREVIEW_ACTION:
+            context = self.get_context_data(
+                form=form,
+                message=form.instance
+            )
+            return self.render_to_response(context=context)
+
+        elif action == self.SAVE_ACTION:
+            return super().form_valid(form)
+
+    def get_mailing_list(self):
+        mailing_list = get_object_or_404(
+            models.MailingList, id=self.kwargs['mailinglist_pk'])
+
+        if not mailing_list.user_can_use_mailing_list(self.request.user):
+            raise PermissionDenied()
+        return mailing_list

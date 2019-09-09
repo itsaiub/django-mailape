@@ -15,7 +15,7 @@
   </a></div>
   <h2>Messages</h2>
   <div>
-    <a href="" class="btn btn-primary">
+    <a href="{% url 'mailinglist:create_message' mailinglist_pk=mailinglist.id %}" class="btn btn-primary">
       Send new Message
     </a>
   </div>
