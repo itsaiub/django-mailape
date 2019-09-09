@@ -17,4 +17,8 @@ urlpatterns = [
          views.SubscribeToMailList.as_view(), name='subscribe'),
     path('mailinglist/<uuid:pk>/thankyou',
          views.ThanksForSubs.as_view(), name='subscriber_thankyou'),
+    path('mailinglist/subscribe/confirmation/<uuid:pk>',
+         views.ConfirmSubscriptionView.as_view(), name='confirm_subscription'),
+    path('mailinglist/unsubscribe/<uuid:pk>',
+         views.UnsubscribeView.as_view(), name='unsubscribe'),
 ]

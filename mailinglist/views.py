@@ -66,3 +66,28 @@ class SubscribeToMailList(CreateView):
 class ThanksForSubs(DetailView):
     model = models.MailingList
     template_name = 'mailinglist/subscription_thanks.html'
+
+
+class ConfirmSubscriptionView(DetailView):
+    model = models.Subscriber
+    template_name = 'mailinglist/confirm_subscription.html'
+
+    def get_object(self, queryset=None):
+        subscriber = super().get_object(queryset=queryset)
+        subscriber.confirmed = True
+        subscriber.save()
+        return subscriber
+
+
+class UnsubscribeView(DeleteView):
+    model = models.Subscriber
+    template_name = 'mailinglist/unsubscribe.html'
+
+    def get_success_url(self):
+        mailing_list = self.object.mailing_list
+        return reverse(
+            'mailinglist:subscribe',
+            kwargs={
+                'mailinglist_pk': mailing_list.id
+            }
+        )
