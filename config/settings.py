@@ -131,3 +131,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = 'user:login'
 LOGIN_REDIRECT_URL = 'mailinglist:mailinglist_list'
 LOGOUT_REDIRECT_URL = 'user:login'
+
+
+# EMail Configuration
+
+EMAIL_HOST = 'smtp.google.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_USERNAME')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+
+MAILING_LIST_FROM_EMAIL = 'noreply@mailape.com'
+MAILING_LIST_LINK_DOMAIN = 'http://localhost:8000'
