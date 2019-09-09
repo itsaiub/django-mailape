@@ -44,7 +44,6 @@ class SubscribeToMailList(CreateView):
     template_name = 'mailinglist/subscriber_form.html'
 
     def get_initial(self):
-        print(self.kwargs['mailinglist_id'])
         return {
             'mailing_list': self.kwargs['mailinglist_id']
         }
@@ -145,3 +144,8 @@ class CreateMessage(LoginRequiredMixin, CreateView):
         if not mailing_list.user_can_use_mailing_list(self.request.user):
             raise PermissionDenied()
         return mailing_list
+
+
+class MessageDetail(LoginRequiredMixin, mixins.UserCanUseMailingList, DetailView):
+    model = models.Message
+    template_name = 'mailinglist/message_detail.html'
