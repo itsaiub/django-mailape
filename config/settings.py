@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'markdownify',
+    'django_celery_results',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -143,3 +144,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 
 MAILING_LIST_FROM_EMAIL = 'noreply@mailape.com'
 MAILING_LIST_LINK_DOMAIN = 'http://localhost:8000'
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
