@@ -1,0 +1,6 @@
+{% extends "mailinglist/email_templates/email_base.html" %}
+{% load markdownify %}
+
+{% block body %}
+  {{ body|markdownify }}
+{% endblock body %}
