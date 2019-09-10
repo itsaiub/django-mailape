@@ -4,7 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 
-from . import emails
+from . import emails, tasks
 # Create your models here.
 
 
@@ -76,4 +76,4 @@ class Message(models.Model):
             self.send_confirmation_email()
 
     def send_confirmation_email(self):
-        emails.send_confirmation_email(self)
+        tasks.send_confirmation_email_to_subscriber.delay(self.id)

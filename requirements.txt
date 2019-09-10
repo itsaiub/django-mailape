@@ -12,3 +12,4 @@ webencodings==0.5.1
 celery<4.2
 celery[redis]
 django-celery-results<2.0
+redis
